@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'users',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
+    'drf_yasg',
+    "drf_spectacular",
+    "drf_spectacular_sidecar", 
 ]
 
 MIDDLEWARE = [
@@ -130,6 +133,20 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 AUTH_USER_MODEL = 'users.User'
 
+SPECTACULAR_SETTINGS = {
+    "TITLE": "BLOG LITE",
+    "VERSION": "1.0.0",
+    "COMPONENTS": {
+        "securitySchemes": {
+            "bearerAuth": {"type": "http", "scheme": "bearer", "bearerFormat": "JWT"},
+        }
+    },
+    "SECURITY": [{"bearerAuth": []}],  
+}

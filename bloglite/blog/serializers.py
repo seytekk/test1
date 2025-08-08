@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Post, SubPost
 from users.serializers import RegisterSerializer as UserSerializer
 from django.db import transaction
+from drf_spectacular.utils import extend_schema_field, OpenApiTypes
 
 
         
@@ -10,6 +11,8 @@ class SubPostSerializer(serializers.ModelSerializer):
     class Meta:
         model=SubPost
         fields=['id','title','body','post','created_at','updated_at','views','likes_count'] 
+        read_only_fields = ['post']
+    @extend_schema_field(OpenApiTypes.INT)    
     def get_likes_count(self, obj):
         return obj.likes.count()
         
@@ -19,8 +22,9 @@ class PostSerializer(serializers.ModelSerializer):
     subposts = SubPostSerializer(many=True)
     class Meta:
         model=Post
-        fields=['id','title','body','author','created_at','updated_at','views','subposts','likes_count'] 
-    def get_likes_count(self, obj):
+        fields=['id','title','body','author','created_at','updated_at','views','subposts','likes_count']    
+    @extend_schema_field(OpenApiTypes.INT)
+    def get_likes_count(self, obj)-> int:
         return obj.likes.count()
     def create(self, validated_data):
         subposts_data=validated_data.pop('subposts')
