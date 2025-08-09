@@ -35,11 +35,11 @@
             POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           ports:
             - 5432:5432
-          options: >-
-            --health-cmd="pg_isready -U ${{ secrets.POSTGRES_USER }} -d ${{ secrets.POSTGRES_DB }}"
+           options: >-
+            --health-cmd="pg_isready -U appuser -d appdb_test"
             --health-interval=5s
             --health-timeout=5s
-            --health-retries=20
+            --health-retries=30
 
       env:
         POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
