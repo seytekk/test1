@@ -1,0 +1,7 @@
+venv/
+db.sqlite3
+POSTGRES_DB=appdb
+POSTGRES_USER=appuser
+POSTGRES_PASSWORD=secretpassword
+POSTGRES_HOST=db
+POSTGRES_PORT=5432
