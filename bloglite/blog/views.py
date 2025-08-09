@@ -6,27 +6,15 @@ from django.db.models import F
 from django.db import transaction
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from drf_spectacular.utils import ( extend_schema, extend_schema_view,
-    OpenApiParameter, OpenApiResponse, OpenApiExample, OpenApiRequest
+    OpenApiResponse, OpenApiExample
 )
 from .models import Post, SubPost
 from .serializers import PostSerializer, SubPostSerializer
 
 
 
-from django.db import transaction
-from django.db.models import F
-from rest_framework import viewsets, status
-from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from rest_framework.response import Response
 
-from drf_spectacular.utils import (
-    extend_schema, extend_schema_view,
-    OpenApiParameter, OpenApiResponse, OpenApiExample, OpenApiTypes
-)
 
-from .models import Post
-from .serializers import PostSerializer
 
 
 @extend_schema_view(
