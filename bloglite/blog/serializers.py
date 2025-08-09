@@ -38,7 +38,7 @@ class PostSerializer(serializers.ModelSerializer):
         instance.title=validated_data.get('title',instance.title)
         instance.save()
         
-        existing_ids = [sub.id for sub in instance.subposts.all()]
+        #existing_ids = [sub.id for sub in instance.subposts.all()]
         received_ids = [sub.get('id') for sub in subposts_data if sub.get('id')]
         for sub in instance.subposts.all():
             if sub.id not in received_ids:
