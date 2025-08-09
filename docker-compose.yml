@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    working_dir: /app/bloglite
+    env_file: .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >
+      sh -c "python manage.py migrate &&
+         python bloglite/manage.py collectstatic --noinput || true &&
+         gunicorn -w 3 -b 0.0.0.0:8000 bloglite.wsgi:application"
+    volumes:
+      - ./.static:/app/staticfiles
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    env_file: .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    #ports:
+      #- "5432:5432" 
+
+volumes:
+  pgdata:
